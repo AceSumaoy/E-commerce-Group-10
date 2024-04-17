@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ProductInfo from './ProductInfo';
 import ProductSummary from './ProductSummary';
 import ViewCart from './ViewCart';
@@ -30,6 +30,19 @@ function ProductPage() {
     alert('Checkout functionality to be implemented.');
   };
 
+  const products = [
+    { id: 1, name: 'Hotdog', price: '15', description: 'Mahaba na mainit' },
+    { id: 2, name: 'Burger', price: '35', description: 'Plat na mainit' },
+    { id: 3, name: 'Siopao', price: '25', description: 'Bilog na mainit' },
+    { id: 4, name: 'Footlong', price: '45', description: 'Mas mahaba na mainit' },
+    { id: 5, name: 'Turon', price: '20', description: 'Mahaba din pero saging' },
+    { id: 6, name: 'Tao', price: '10000000', description: 'Mahaba din to kaso buhay' },
+    { id: 7, name: 'Fishball', price: '1', description: 'Maliit na bilog na mainit' },
+    { id: 8, name: 'KwekKwek', price: '10', description: 'Description' },
+    { id: 9, name: 'Kikkyam', price: '2', description: 'Description' },
+    { id: 10, name: 'Shawarma', price: '80', description: 'Description' },
+  ];
+
   return (
     <Router>
       <div>
@@ -49,30 +62,28 @@ function ProductPage() {
             </ul>
           </div>
         </nav>
-        <Switch>
-          <Route path="/products">
-            <ProductSummary cart={cart} />
-            <h1>PRODUCTS</h1>
-            {products.map(product => (
-              <ProductInfo 
-                key={product.id} 
-                name={product.name} 
-                price={product.price} 
-                description={product.description} 
-                onAddToCart={() => addToCart(product)} 
-              />
-            ))}
-          </Route>
-          <Route path="/cart">
-            <ViewCart cart={cart} removeFromCart={removeFromCart} checkout={checkout} />
-          </Route>
-          <Route path="/">
-            <div className="container text-center mt-5">
-              <h1>Welcome to Our Store</h1>
-              <Link to="/products" className="btn btn-primary mt-3">Proceed to Shopping</Link>
-            </div>
-          </Route>
-        </Switch>
+        <Route path="/products">
+          <ProductSummary cart={cart} />
+          <h1>PRODUCTS</h1>
+          {products.map(product => (
+            <ProductInfo 
+              key={product.id} 
+              name={product.name} 
+              price={product.price} 
+              description={product.description} 
+              onAddToCart={() => addToCart(product)} 
+            />
+          ))}
+        </Route>
+        <Route path="/cart">
+          <ViewCart cart={cart} removeFromCart={removeFromCart} checkout={checkout} />
+        </Route>
+        <Route exact path="/">
+          <div className="container text-center mt-5">
+            <h1>Welcome to Our Store</h1>
+            <Link to="/products" className="btn btn-primary mt-3">Proceed to Shopping</Link>
+          </div>
+        </Route>
       </div>
     </Router>
   );
