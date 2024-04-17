@@ -1,11 +1,12 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import ButtonComponent from './Components/Button';
+import ProductPage from './Components/ProductPage';
 
 function App() {
   return (
-    
+    <div>
+      <ProductPage/>
+    </div>
   );
 }
 
