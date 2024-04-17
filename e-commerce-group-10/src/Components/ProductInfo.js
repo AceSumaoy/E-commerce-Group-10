@@ -1,4 +1,4 @@
--import React from 'react';
+import React from 'react';
 
 function ProductInfo({ id, name, price, description, onAddToCart }) {
   return (
