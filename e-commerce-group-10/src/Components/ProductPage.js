@@ -1,34 +1,10 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ProductInfo from './ProductInfo';
 import ProductSummary from './ProductSummary';
 import ViewCart from './ViewCart';
+import Modal from './Modal';
 
 function ProductPage() {
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (product) => {
-    const existingProduct = cart.find(item => item.id === product.id);
-
-    if (existingProduct) {
-      const updatedCart = cart.map(item =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      setCart(updatedCart);
-    } else {
-      setCart(prevCart => [...prevCart, { ...product, quantity: 1 }]);
-    }
-  };
-
-  const removeFromCart = (productId) => {
-    const updatedCart = cart.filter(item => item.id !== productId);
-    setCart(updatedCart);
-  };
-
-  const checkout = () => {
-    // Implement checkout logic here, e.g., navigate to a checkout page
-    alert('Checkout functionality to be implemented.');
-  };
 
   const products = [
     { id: 1, name: 'Hotdog', price: '15', description: 'Mahaba na mainit' },
@@ -43,49 +19,60 @@ function ProductPage() {
     { id: 10, name: 'Shawarma', price: '80', description: 'Description' },
   ];
 
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
+
+  const addToCart = (product) => {
+    const existingProduct = cart.find(item => item.id === product.id);
+
+    if (existingProduct) {
+      const updatedCart = cart.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      setCart(updatedCart);
+    } else {
+      setCart(prevCart => [...prevCart, { ...product, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (productId, decrement = false) => {
+    const updatedCart = cart.map(item => {
+      if (item.id === productId) {
+        if (decrement && item.quantity > 1) {
+          return { ...item, quantity: item.quantity - 1 };
+        } else {
+          return null;
+        }
+      }
+      return item;
+    }).filter(Boolean); 
+    setCart(updatedCart);
+  };
+
+  
+
   return (
-    <Router>
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container">
-            <Link className="navbar-brand" to="/">Company Logo</Link>
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/products">Products</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">My Cart</Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <Route path="/products">
-          <ProductSummary cart={cart} />
-          <h1>PRODUCTS</h1>
-          {products.map(product => (
-            <ProductInfo 
-              key={product.id} 
-              name={product.name} 
-              price={product.price} 
-              description={product.description} 
-              onAddToCart={() => addToCart(product)} 
-            />
-          ))}
-        </Route>
-        <Route path="/cart">
-          <ViewCart cart={cart} removeFromCart={removeFromCart} checkout={checkout} />
-        </Route>
-        <Route exact path="/">
-          <div className="container text-center mt-5">
-            <h1>Welcome to Our Store</h1>
-            <Link to="/products" className="btn btn-primary mt-3">Proceed to Shopping</Link>
-          </div>
-        </Route>
-      </div>
-    </Router>
+    <div>
+      <ProductSummary cart={cart} />
+      {!showCart && <button onClick={() => setShowCart(true)}>View Cart</button>}
+      {showCart && (
+        <Modal onClose={() => setShowCart(false)}>
+          <ViewCart cart={cart} removeFromCart={removeFromCart} />
+        </Modal>
+      )}
+      
+      <h1>PRODUCTS</h1>
+      {products.map(product => (
+        <ProductInfo 
+          key={product.id} 
+          id={product.id}
+          name={product.name} 
+          price={product.price} 
+          description={product.description} 
+          onAddToCart={() => addToCart(product)} 
+        />
+      ))}
+    </div>
   );
 }
 
