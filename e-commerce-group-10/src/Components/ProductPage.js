@@ -40,24 +40,28 @@ function ProductPage() {
       price: "45",
       description: "Mas mahaba na mainit",
     },
+
     {
       id: 5,
       name: "Turon",
       price: "20",
       description: "Mahaba din pero saging",
     },
+
     {
       id: 6,
       name: "Tao",
       price: "10000000",
       description: "Mahaba din to kaso buhay",
     },
+
     {
       id: 7,
       name: "Fishball",
       price: "1",
       description: "Maliit na bilog na mainit",
     },
+
     { id: 8, name: "KwekKwek", price: "10", description: "Description" },
     { id: 9, name: "Kikkyam", price: "2", description: "Description" },
     { id: 10, name: "Shawarma", price: "80", description: "Description" },
