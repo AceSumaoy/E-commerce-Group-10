@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ViewCart({ cart, removeFromCart }) {
+function ViewCart({ cart, removeFromCart , checkout}) {
   const handleRemove = (itemId) => {
     const existingItem = cart.find(item => item.id === itemId);
     if (existingItem.quantity > 1) {
@@ -24,7 +24,7 @@ function ViewCart({ cart, removeFromCart }) {
         ))}
       </ul>
       {/* Temporary Checkout Button */}
-      <button onClick={() => console.log(cart)}>Checkout</button>
+      <button onClick={checkout}>Checkout</button>
     </div>
   );
 }
