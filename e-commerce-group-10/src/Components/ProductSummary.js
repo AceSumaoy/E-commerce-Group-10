@@ -1,5 +1,3 @@
-import React from 'react';
-
 function ProductSummary({ cart }) {
   const calculateTotalPrice = (price, quantity) => {
     return parseFloat(price) * quantity;
@@ -21,7 +19,7 @@ function ProductSummary({ cart }) {
     <div>
       <h2>Product Summary</h2>
       <p><strong>Item Quantity:</strong> {getTotalItemsInCart()}</p>
-      <p><strong>Total Price:</strong> ₱{getTotalPriceForCart()}</p>
+      <p><strong>Total Price:</strong> ₱{getTotalPriceForCart()}.00</p>
     </div>
   );
 }
