@@ -4,8 +4,7 @@ const Home = () => {
       <div>
         <h2>HOME</h2>
         <p>Welcome to Lazpee</p>
-        <img src={lazpee.png} alt="lazpee icon" ></img>
-        
+        <img class="logo" src={lazpee.png} alt="lazpee icon"></img>
       </div>
     );
   }
